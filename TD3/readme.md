@@ -21,6 +21,44 @@
     vagrant ssh vm1 -c "sudo docker stack ps monapp"
     ```
 
+## Se connecter à l'application
+
+Par défaut, les machines ont les adresses suivantes :
+```
+192.168.56.11 (vm1)
+192.168.56.12 (vm2)
+```
+
+L'application **bonjour** est sur le port **8000** de ces machines
+
+L'application **aurevoir** est sur le port **8001** de ces machines
+
+Vous pouvez changer ces adresses IP et les ports dans le **Vagrantfile**
+
+### URL complète (remplacez le x, voir au-dessus)
+
+```
+http://192.168.56.1x:800x/[str:ton nom]
+```
+
+## Commandes de débogage
+
+En cas de problème avec les services (erreur "task: non-zero exit"), utilisez ces commandes :
+
+```bash
+# Vérifier les logs des services
+vagrant ssh vm1 -c "sudo docker service logs monapp_api1"
+
+# Vérifier l'état des tâches
+vagrant ssh vm1 -c "sudo docker stack ps monapp"
+
+# Vérifier les ressources système
+vagrant ssh vm1 -c "free -h"
+
+# Vérifier les limites de mémoire des conteneurs
+vagrant ssh vm1 -c "sudo docker stats"
+```
+
 ## Notes
 
 - Le fichier `docker-compose.yml` doit être présent dans ce dossier.
