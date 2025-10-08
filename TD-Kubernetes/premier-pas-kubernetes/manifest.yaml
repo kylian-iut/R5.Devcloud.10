@@ -1,0 +1,53 @@
+---
+# Pod simple
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod-declaratif
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+---
+# Deployment avec 2 réplicas
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nginx-declaratif
+  labels:
+    app: hello-nginx-declaratif
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-nginx-declaratif
+  template:
+    metadata:
+      labels:
+        app: hello-nginx-declaratif
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+
+---
+# Service LoadBalancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-nginx-service-declaratif
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: hello-nginx-declaratif
